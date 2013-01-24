@@ -25,6 +25,10 @@ int main(int argc, char* argv[]) {
  libusb_init(&ctx);
 
  libusb_device_handle* hndl = libusb_open_device_with_vid_pid(ctx,0x04b4,0x1004);
+ if(hndl == NULL) {
+   printf("Can't open device\n");
+   return -100;
+ }
  libusb_claim_interface(hndl,0);
  libusb_set_interface_alt_setting(hndl,0,0);
  
