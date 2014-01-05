@@ -17,19 +17,22 @@
 SOURCES = fx2timer.c serial.c i2c.c delay.c setupdat.c gpif.c eputils.c $(wildcard interrupts/*.c)
 FX2_OBJS = $(patsubst %.c,%.rel, $(SOURCES)) usbav.rel int4av.rel
 INCLUDES = -I../include
-SDCC = sdcc -mmcs51 $(SDCCFLAGS)
+SDCC ?= sdcc
+SDCC += -mmcs51 $(SDCCFLAGS)
+SDAS8051 ?= sdas8051
+SDCCLIB ?= sdcclib
 LIBS = fx2.lib
 
 all: $(LIBS)
 
 $(LIBS): $(FX2_OBJS)
-	sdcclib fx2.lib $?
+	$(SDCCLIB) fx2.lib $?
 
 usbav.rel: usbav.a51
-	sdas8051 -logs usbav.a51
+	$(SDAS8051) -logs usbav.a51
 
 int4av.rel: int4av.a51
-	sdas8051 -logs int4av.a51
+	$(SDAS8051) -logs int4av.a51
 
 %.rel: %.c
 	$(SDCC) $(INCLUDES) -c $< -o $@

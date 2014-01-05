@@ -44,6 +44,9 @@ CODE_SIZE?=--code-size 0x3c00
 XRAM_SIZE?=--xram-size 0x0200
 XRAM_LOC?=--xram-loc 0x3c00
 BUILDDIR?=build
+SDCC?=sdcc
+SDAS8051?=sdas8051
+SDCCLIB?=sdcclib
 
 FX2LIBDIR?=$(dir $(lastword $(MAKEFILE_LIST)))../
 
@@ -51,7 +54,7 @@ RELS=$(addprefix $(BUILDDIR)/, $(addsuffix .rel, $(notdir $(basename $(SOURCES) 
 # these are pretty good settings for most firmwares.  
 # Have to be careful with memory locations for 
 # firmwares that require more xram etc.
-CC = sdcc -mmcs51 \
+CC = $(SDCC) -mmcs51 \
 	$(SDCCFLAGS) \
     $(CODE_SIZE) \
     $(XRAM_SIZE) \
@@ -68,7 +71,7 @@ bix: $(BUILDDIR)/$(BASENAME).bix
 iic: $(BUILDDIR)/$(BASENAME).iic
 
 $(FX2LIBDIR)/lib/fx2.lib: $(FX2LIBDIR)/lib/*.c $(FX2LIBDIR)/lib/*.a51
-	make -C $(FX2LIBDIR)/lib
+	make -C $(FX2LIBDIR)/lib SDCC=$(SDCC) SDAS8051=$(SDAS8051) SDCCLIB=$(SDCCLIB)
 
 $(BUILDDIR):
 	mkdir -p $(BUILDDIR)
@@ -78,7 +81,7 @@ $(BUILDDIR)/$(BASENAME).ihx: $(BUILDDIR) $(SOURCES) $(A51_SOURCES) $(FX2LIBDIR)/
 # to differentiate the dependency.  (Is it %.rel: %.c or %.a51)
 	for a in $(A51_SOURCES); do \
 	 cp $$a $(BUILDDIR)/; \
-	 cd $(BUILDDIR) && sdas8051 -logs `basename $$a` && cd ..; done
+	 cd $(BUILDDIR) && $(SDAS8051) -logs `basename $$a` && cd ..; done
 	for s in $(SOURCES); do \
 	 THISREL=$$(basename `echo "$$s" | sed -e 's/\.c$$/\.rel/'`); \
 	 $(CC) -c -I $(FX2LIBDIR)/include $$s -o $(BUILDDIR)/$$THISREL ; done
