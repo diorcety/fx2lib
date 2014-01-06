@@ -108,11 +108,18 @@ Freq  | Divisor | 1us in cycles | 8bit in us |   16bit in us
 12MHz |   12    |        1      |        256 |            65536
 
  */
-
+    // Stop before doing anything
+	TR0 = 0;
+	DISABLE_TIMER0();
+	
     timer0us = us;
     // Clear old flags
     TMOD = TMOD & ~(bmTMOD_TIMER0_MODE | bmTMOD_TIMER0_COUNTER | bmTMOD_TIMER0_GATE);
-
+	
+	if(us == 0) {
+		return;
+	}
+	
     switch(CPUFREQ) {
         case CLK_12M:
             if(us >= 256) {

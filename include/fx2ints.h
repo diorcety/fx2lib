@@ -67,12 +67,22 @@ typedef enum {
 #define ENABLE_TIMER0() ET0=1
 
 /**
+ * \brief Disable timer 0 interrupt
+ **/
+#define DISABLE_TIMER0() ET0=0
+
+
+/**
  * \brief Enable timer 1 interrupt
  * There is no CLEAR_TIMER1 because the timer interrupt flag
  * is automatically cleared when the isr is called.
  **/
 #define ENABLE_TIMER1() ET1=1
 
+/**
+ * \brief Disable timer 1 interrupt
+ **/
+#define DISABLE_TIMER1() ET1=0
 
 /**
  * \brief Enable timer 2 interrupt
@@ -81,6 +91,12 @@ typedef enum {
  * for the external EXF2 flag.
  **/
 #define ENABLE_TIMER2() ET2=1
+
+/**
+ * \brief Disable timer 2 interrupt
+ **/
+#define DISABLE_TIMER2() ET2=1
+
 /**
  *  \brief Clear timer 2 interrupt
  *
