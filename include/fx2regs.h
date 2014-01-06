@@ -461,6 +461,7 @@ __sfr __at 0xF8 EIP; // EIP Bit Values differ from Reg320
 /* Port Alternate Configuration Registers */
 /* Port A (PORTACFG) */
 #define bmFLAGD      bmBIT7
+#define bmSLCS       bmBIT6
 #define bmINT1       bmBIT1
 #define bmINT0       bmBIT0
 /* Port C (PORTCCFG) */
@@ -563,13 +564,17 @@ __sfr __at 0xF8 EIP; // EIP Bit Values differ from Reg320
 #define bmEP4EMPTY   bmBIT2
 #define bmEP2FULL    bmBIT1
 #define bmEP2EMPTY   bmBIT0
+/* Endpoint Config (EP[2468]CFG) */
+#define bmVALID     bmBIT7
+#define bmDIR       bmBIT6
+#define bmTYPE      (bmBIT4|bmBIT5)
+#define bmTYPE1     bmBIT5
+#define bmTYPE0     bmBIT4
+#define bmSIZE      bmBIT3
 /* Endpoint Config (EP[24]CFG) */
 #define bmBUF       (bmBIT0|bmBIT1)
-/* Endpoint Config (EP[2468]CFG) */
-#define bmSIZE      bmBIT3
-#define bmTYPE      (bmBIT4|bmBIT5)
-#define bmDIR       bmBIT6
-#define bmVALID     bmBIT7
+#define bmBUF1      bmBIT1
+#define bmBUF0      bmBIT0
 /* SETUP Data Pointer Auto Mode (SUDPTRCTL) */
 #define bmSDPAUTO    bmBIT0
 /* Endpoint Data Toggle Control (TOGCTL) */
@@ -624,5 +629,10 @@ __sfr __at 0xF8 EIP; // EIP Bit Values differ from Reg320
 
 /* Chip Feature Register (GPCR2) */
 #define bmFULLSPEEDONLY    bmBIT4
+
+/* EP 01 status (EP01STAT) */
+#define bmEP1INBSY      bmBIT2
+#define bmEP1OUTBSY     bmBIT1
+#define bmEP0BSY        bmBIT0
 
 #endif   /* FX2REGS_H */

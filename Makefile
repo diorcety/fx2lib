@@ -7,9 +7,11 @@ TAG=HEAD
 
 all:
 	$(MAKE) -C lib
+	$(MAKE) -C examples
 
 clean:
 	$(MAKE) -C lib clean
+	$(MAKE) -C examples clean
 
 docs:
 	doxygen docs/docs.conf

@@ -32,8 +32,8 @@
 
 
 
-volatile bit dosud=FALSE;
-volatile bit dosuspend=FALSE;
+volatile __bit dosud=FALSE;
+volatile __bit dosuspend=FALSE;
 
 // custom functions
 extern void main_loop();
